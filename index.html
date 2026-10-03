@@ -252,6 +252,7 @@ const CONTENT = {
   candles: 5,
   cakeDone: "Dileğin kabul olsun! 🎉",
   traits: ["Anksiyeten", "Anksiyeten", "Anksiyeten", "Komikliğin", "Anksiyeten", "Anksiyeten"],
+  firstTrait: "Komikliğin",
   letter: [
     "Sevgili İremsu,",
     "Bugün senin günün ve sana söylemek istediğim çok şey var. Ama en önemlisi şu: iyi ki varsın, iyi ki tanışmışız.",
@@ -524,7 +525,8 @@ function spin() {
   if (spinning) return;
   if (found.size === T.length) found.clear(), labels.forEach(l => { l.textContent = "?"; l.setAttribute("transform", l.dataset.base); l.classList.add("hidden-q"); l.classList.remove("revealed"); }), [...chipsEl.children].forEach(c => { c.className = "chip"; c.textContent = "?"; }), finale.hidden = true;
   const left = T.map((_, i) => i).filter(i => !found.has(i));
-  const pick = left[Math.floor(Math.random() * left.length)];
+  const firstIdx = T.indexOf(CONTENT.firstTrait);
+  const pick = found.size === 0 && firstIdx >= 0 ? firstIdx : left[Math.floor(Math.random() * left.length)];
   const target = ((360 - (pick * seg + seg / 2)) % 360 + 360) % 360 + (Math.random() - .5) * seg * 0.6;
   const cur = ((rot % 360) + 360) % 360;
   rot += (360 - cur) + target + 360 * 5;
